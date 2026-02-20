@@ -4,7 +4,6 @@ import { Link, useLocation } from "react-router";
 // Assume these icons are imported from an icon library
 import {
   BoxCubeIcon,
-  CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
@@ -14,6 +13,8 @@ import {
   PlugInIcon,
   TableIcon,
   UserCircleIcon,
+  ShootingStarIcon,
+  DollarLineIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
@@ -29,17 +30,22 @@ const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
     name: "Dashboard",
-    subItems: [{ name: "Ecommerce", path: "/", pro: false }],
+    path: "/",
   },
   {
-    icon: <CalenderIcon />,
-    name: "Calendar",
-    path: "/calendar",
+    icon: <ShootingStarIcon />,
+    name: "Ventas",
+    path: "/ventas",
   },
   {
-    icon: <UserCircleIcon />,
-    name: "User Profile",
-    path: "/profile",
+    icon: <BoxCubeIcon />,
+    name: "Productos",
+    path: "/productos",
+  },
+  {
+    icon: <DollarLineIcon />,
+    name: "Métodos de pago y comisiones",
+    path: "/metodos-pago-comisiones",
   },
   {
     name: "Forms",
@@ -59,6 +65,11 @@ const navItems: NavItem[] = [
       { name: "404 Error", path: "/error-404", pro: false },
     ],
   },
+  {
+    icon: <UserCircleIcon />,
+    name: "Tu perfil",
+    path: "/profile",
+  }
 ];
 
 const othersItems: NavItem[] = [
@@ -308,14 +319,14 @@ const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/logo.svg"
+                src="/images/logo/Logo almara.jpg"
                 alt="Logo"
                 width={150}
                 height={40}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/logo-dark.svg"
+                src="/images/logo/Logo almara.jpg"
                 alt="Logo"
                 width={150}
                 height={40}
@@ -323,7 +334,7 @@ const AppSidebar: React.FC = () => {
             </>
           ) : (
             <img
-              src="/images/logo/logo-icon.svg"
+              src="/images/logo/Favicon.png"
               alt="Logo"
               width={32}
               height={32}

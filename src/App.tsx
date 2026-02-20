@@ -18,6 +18,9 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import Ventas from "./pages/Ventas";
+import Productos from "./pages/Productos";
+import MetodosPago from "./pages/MetodosPago";
 
 export default function App() {
   return (
@@ -51,6 +54,11 @@ export default function App() {
             {/* Charts */}
             <Route path="/line-chart" element={<LineChart />} />
             <Route path="/bar-chart" element={<BarChart />} />
+
+            {/* Admin Layout */}
+            <Route path="/ventas" element={<Ventas />} />
+            <Route path="/productos" element={<Productos />} />
+            <Route path="/metodos-pago-comisiones" element={<MetodosPago />} />
           </Route>
 
           {/* Auth Layout */}
