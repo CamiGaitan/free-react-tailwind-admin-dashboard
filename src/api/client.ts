@@ -1,10 +1,24 @@
 import axios from "axios";
 
+const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:8000/api/";
+const normalizedApiBaseUrl = apiBaseUrl.endsWith("/")
+  ? apiBaseUrl
+  : `${apiBaseUrl}/`;
+
+const isAuthEndpoint = (url?: string) => {
+  if (!url) return false;
+  return url.includes("auth/login/") || url.includes("auth/refresh/");
+};
+
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: normalizedApiBaseUrl,
 });
 
 api.interceptors.request.use((config) => {
+  if (isAuthEndpoint(config.url)) {
+    return config;
+  }
+
   const token = localStorage.getItem("access");
 
   if (token) {
@@ -19,7 +33,11 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (isAuthEndpoint(originalRequest?.url)) {
+      return Promise.reject(error);
+    }
+
+    if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
       originalRequest._retry = true;
 
       const refresh = localStorage.getItem("refresh");
@@ -30,10 +48,9 @@ api.interceptors.response.use(
       }
 
       try {
-        const response = await axios.post(
-          "http://localhost:8000/api/token/refresh/",
-          { refresh }
-        );
+        const response = await axios.post(`${normalizedApiBaseUrl}auth/refresh/`, {
+          refresh,
+        });
 
         const newAccess = response.data.access;
         localStorage.setItem("access", newAccess);

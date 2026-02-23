@@ -1,14 +1,47 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { ChevronLeftIcon, EyeCloseIcon, EyeIcon } from "../../icons";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
 import Button from "../ui/button/Button";
+import { useAuth } from "../../context/AuthContext";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMessage("");
+
+    try {
+      await login(username, password);
+      navigate("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const backendMessage =
+          (error.response?.data as { detail?: string })?.detail ||
+          "No se pudo iniciar sesión. Verifica tus credenciales.";
+
+        setErrorMessage(
+          error.response
+            ? backendMessage
+            : "Error de red o CORS. Revisa que el backend permita peticiones desde tu frontend."
+        );
+      } else {
+        setErrorMessage("Ocurrió un error inesperado al iniciar sesión.");
+      }
+    }
+  };
   return (
     <div className="flex flex-col flex-1">
       <div className="w-full max-w-md pt-10 mx-auto">
@@ -31,13 +64,17 @@ export default function SignInForm() {
             </p>
           </div>
           <div>
-            <form>
+            <form onSubmit={handleLogin}>
               <div className="space-y-6">
                 <div>
                   <Label>
                     Email <span className="text-error-500">*</span>{" "}
                   </Label>
-                  <Input placeholder="ejemplo@gmail.com" />
+                  <Input
+                    placeholder="ejemplo@gmail.com"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
                 </div>
                 <div>
                   <Label>
@@ -47,6 +84,8 @@ export default function SignInForm() {
                     <Input
                       type={showPassword ? "text" : "password"}
                       placeholder="Ingresa tu contraseña"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                     <span
                       onClick={() => setShowPassword(!showPassword)}
@@ -79,6 +118,9 @@ export default function SignInForm() {
                     Iniciar sesión
                   </Button>
                 </div>
+                {errorMessage ? (
+                  <p className="text-sm text-error-500">{errorMessage}</p>
+                ) : null}
               </div>
             </form>
 

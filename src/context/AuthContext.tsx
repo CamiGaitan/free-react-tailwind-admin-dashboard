@@ -3,7 +3,7 @@ import api from "../api/client";
 
 interface AuthContextType {
   token: string | null;
-  login: (email: string, password: string) => Promise<void>;
+  login: (username: string, password: string) => Promise<void>;
   logout: () => void;
 }
 
@@ -14,9 +14,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.getItem("access")
   );
 
-  const login = async (email: string, password: string) => {
-    const response = await api.post("/token/", {
-      email,
+  const login = async (username: string, password: string) => {
+    const response = await api.post("auth/login/", {
+      username,
       password,
     });
 

@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { getProducts } from "../../api/productService";
 import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
 import BasicTableOne from "../../components/tables/BasicTables/BasicTableOne";
 import MonthlyTarget from "../../components/ecommerce/MonthlyTarget";
@@ -5,6 +7,11 @@ import Button from "../../components/ui/button/Button";
 import PageMeta from "../../components/common/PageMeta";
 
 export default function Home() {
+
+  useEffect(() => {
+    getProducts().then(console.log)
+  }, []);
+  
   return (
     <>
       <PageMeta

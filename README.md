@@ -73,6 +73,14 @@ git clone https://github.com/TailAdmin/free-react-tailwind-admin-dashboard.git
    yarn dev
    ```
 
+### Environment variables
+
+Create a `.env` file based on `.env.example` and set your backend URL:
+
+```bash
+VITE_API_URL=http://localhost:8000/api/
+```
+
 ## Components
 
 TailAdmin is a pre-designed starting point for building a web-based dashboard using React.js and Tailwind CSS. The
