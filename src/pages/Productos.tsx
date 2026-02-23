@@ -1,9 +1,7 @@
-import PageMeta from "../components/common/PageMeta";
 import PageBreadcrumb from "../components/common/PageBreadCrumb";
 import DataTable from "../components/tables/DataTable";
 import Button from "../components/ui/button/Button";
 import { PlusIcon } from "../icons";
-import { render } from "@fullcalendar/core/preact.js";
 
 interface Product {
     id: number;

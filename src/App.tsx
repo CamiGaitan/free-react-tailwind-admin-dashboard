@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
@@ -30,12 +31,29 @@ export default function App() {
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
+            <Route index path="/" element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } 
+            />
 
             {/* Others Page */}
-            <Route path="/profile" element={<UserProfiles />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/blank" element={<Blank />} />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <UserProfiles />
+              </ProtectedRoute>
+            } />
+            <Route path="/calendar" element={
+              <ProtectedRoute>
+                <Calendar />
+              </ProtectedRoute>
+            } />
+            <Route path="/blank" element={
+              <ProtectedRoute>
+                <Blank />
+              </ProtectedRoute>
+            } />
 
             {/* Forms */}
             <Route path="/form-elements" element={<FormElements />} />
@@ -56,9 +74,21 @@ export default function App() {
             <Route path="/bar-chart" element={<BarChart />} />
 
             {/* Admin Layout */}
-            <Route path="/ventas" element={<Ventas />} />
-            <Route path="/productos" element={<Productos />} />
-            <Route path="/metodos-pago-comisiones" element={<MetodosPago />} />
+            <Route path="/ventas" element={
+              <ProtectedRoute>
+                <Ventas />
+              </ProtectedRoute>
+            } />
+            <Route path="/productos" element={
+              <ProtectedRoute>
+                <Productos />
+              </ProtectedRoute>
+            } />
+            <Route path="/metodos-pago-comisiones" element={
+              <ProtectedRoute>
+                <MetodosPago />
+              </ProtectedRoute>
+            } />
           </Route>
 
           {/* Auth Layout */}
