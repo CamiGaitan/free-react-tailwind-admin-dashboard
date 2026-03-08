@@ -6,11 +6,18 @@ import {
   TableRow,
 } from "../ui/table";
 
-interface Column<T> {
+interface AccessorColumn<T> {
   header: string;
   accessor: keyof T;
   render?: (value: any, row: T) => React.ReactNode;
 }
+
+interface CellColumn<T> {
+  header: string;
+  cell: (row: T) => React.ReactNode;
+}
+
+type Column<T> = AccessorColumn<T> | CellColumn<T>;
 
 interface DataTableProps<T> {
   columns: Column<T>[];
@@ -47,9 +54,11 @@ export default function DataTable<T>({
                     key={colIndex}
                     className="px-5 py-4 text-start text-theme-sm dark:text-gray-400"
                   >
-                    {col.render
-                      ? col.render(row[col.accessor], row)
-                      : row[col.accessor] as React.ReactNode}
+                    {"cell" in col
+                      ? col.cell(row)
+                      : col.render
+                        ? col.render(row[col.accessor], row)
+                        : (row[col.accessor] as React.ReactNode)}
                   </TableCell>
                 ))}
               </TableRow>

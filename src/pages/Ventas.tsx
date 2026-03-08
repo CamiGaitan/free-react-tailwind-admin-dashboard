@@ -1,40 +1,59 @@
+import { useEffect, useState } from "react";
+import { getSales } from "../api/salesService";
+import { Sale } from "../types/sale";
 import DataTable from "../components/tables/DataTable";
 import PageBreadcrumb from "../components/common/PageBreadCrumb";
 import Button from "../components/ui/button/Button";
 import { PlusIcon } from "../icons";
-
-interface Sale {
-  id: number;
-  date: string;
-  total: number;
-  payment_method: string;
-  gross_margin: number;
-}
-
-const salesMock: Sale[] = [
-  { id: 1, date: "2025-02-10", total: 1200, payment_method: "Credit Card", gross_margin: 320 },
-  { id: 2, date: "2025-02-11", total: 800, payment_method: "Cash", gross_margin: 210 },
-];
+import { useNavigate } from "react-router-dom";
 
 export default function Ventas() {
+
+  const [sales, setSales] = useState<Sale[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    loadSales();
+  }, []);
+
+  const loadSales = async () => {
+    const data = await getSales();
+    setSales(data);
+  };
+
   const columns: { header: string; accessor: keyof Sale; render?: (value: any) => React.ReactNode }[] = [
-    { header: "ID", accessor: "id" },
-    { header: "Fecha", accessor: "date" },
-    { header: "Método de pago", accessor: "payment_method" },
-    { header: "Total", accessor: "total" },
-    { header: "Margen bruto", accessor: "gross_margin" },
-    { header: "Acciones", accessor: "id", render: (value) => (
-      <Button variant="outline" size="sm">
-        Ver detalles
-      </Button>
-    ) },
+    { header: "ID", accessor: "id" as const },
+    { header: "Fecha", accessor: "created_at" as const },
+    { header: "Método de pago", accessor: "payment_method_name" as const },
+    { header: "Total", accessor: "total_amount" as const },
+    { header: "Margen bruto", accessor: "gross_margin" as const },
+    {
+      header: "Acciones",
+      accessor: "id" as const,
+      render: (value: number) => (
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate(`/ventas/${value}/editar`)}
+        >
+          Editar
+        </Button>
+      ),
+    },
   ];
 
   return (
     <>
       <PageBreadcrumb pageTitle="Ventas" />
-      <Button variant="primary" className="mb-4" startIcon={<PlusIcon />}>Agregar</Button>
-      <DataTable columns={columns} data={salesMock} />
+      <Button
+        variant="primary"
+        className="mb-4"
+        startIcon={<PlusIcon />}
+        onClick={() => navigate("/ventas/nuevo")}
+      >
+        Crear Venta
+      </Button>
+      <DataTable columns={columns} data={sales} />
     </>
   );
 }

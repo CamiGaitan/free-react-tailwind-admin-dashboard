@@ -7,7 +7,7 @@ import Button from "../components/ui/button/Button";
 import { PlusIcon } from "../icons";
 import { useNavigate } from "react-router-dom";
 
-export default function Productos() {
+export default function Insumos() {
 
   const [products, setProducts] = useState<Product[]>([]);
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function Productos() {
 
   const loadProducts = async () => {
     const data = await getProducts();
-    setProducts(data.filter(p => p.product_type === "finished"));
+    setProducts(data.filter(p => p.product_type === "raw"));
   };
   
   const columns = [
@@ -32,7 +32,7 @@ export default function Productos() {
         <Button 
           variant="outline" 
           size="sm"
-          onClick={() => navigate(`/productos/${row.id}/editar`)}
+          onClick={() => navigate(`/insumos/${row.id}/editar`)}
           >
           Editar
         </Button>
@@ -41,14 +41,14 @@ export default function Productos() {
 
   return (
     <>
-      <PageBreadcrumb pageTitle="Productos" />
+      <PageBreadcrumb pageTitle="Insumos" />
       <Button 
         variant="primary" 
         className="mb-4"
         startIcon={<PlusIcon />}
-        onClick={() => navigate("/productos/nuevo")}
+        onClick={() => navigate("/insumos/nuevo")}
         >
-          Crear Producto
+          Crear Insumo
       </Button>
       <DataTable columns={columns} data={products} />
     </>

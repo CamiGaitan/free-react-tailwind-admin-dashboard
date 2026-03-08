@@ -22,6 +22,10 @@ import Home from "./pages/Dashboard/Home";
 import Ventas from "./pages/Ventas";
 import Productos from "./pages/Productos";
 import MetodosPago from "./pages/MetodosPago";
+import Insumos from "./pages/Insumos";
+import CrearMetodoDePago from "./pages/Formularios/MetodoDePagoForm";
+import CrearProducto from "./pages/Formularios/ProductoForm";
+import CrearVenta from "./pages/Formularios/VentaForm";
 
 export default function App() {
   return (
@@ -79,14 +83,64 @@ export default function App() {
                 <Ventas />
               </ProtectedRoute>
             } />
+            <Route path="/ventas/nuevo" element={
+              <ProtectedRoute>
+                <CrearVenta />
+              </ProtectedRoute>
+            } />
+            <Route path="/ventas/:id/editar" element={
+              <ProtectedRoute>
+                <CrearVenta />
+              </ProtectedRoute>
+            } />
             <Route path="/productos" element={
               <ProtectedRoute>
                 <Productos />
               </ProtectedRoute>
             } />
+            <Route path="/productos/nuevo" element={
+              <ProtectedRoute>
+                <CrearProducto />
+              </ProtectedRoute>
+            } />
+            <Route path="/productos/:id/editar" element={
+              <ProtectedRoute>
+                <CrearProducto />
+              </ProtectedRoute>
+            } />
+            <Route path="/insumos" element={
+              <ProtectedRoute>
+                <Insumos />
+              </ProtectedRoute>
+            } />
+            <Route path="/insumos/nuevo" element={
+              <ProtectedRoute>
+                <CrearProducto />
+              </ProtectedRoute>
+            } />
+            <Route path="/insumos/:id/editar" element={
+              <ProtectedRoute>
+                <CrearProducto />
+              </ProtectedRoute>
+            } />
             <Route path="/metodos-pago-comisiones" element={
               <ProtectedRoute>
                 <MetodosPago />
+              </ProtectedRoute>
+            } />
+            <Route path="/metodos-pago-comisiones/nuevo" element={
+              <ProtectedRoute>
+                <CrearMetodoDePago />
+              </ProtectedRoute>
+            } />
+            <Route path="/metodos-pago-comisiones/crear-metodo-pago" element={
+              <ProtectedRoute>
+                <CrearMetodoDePago />
+              </ProtectedRoute>
+            } />
+            <Route path="/metodos-pago-comisiones/:id/editar" element={
+              <ProtectedRoute>
+                <CrearMetodoDePago />
               </ProtectedRoute>
             } />
           </Route>

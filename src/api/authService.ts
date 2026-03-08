@@ -1,7 +1,11 @@
 import api from "./client";
+import { AuthResponse } from "../types/auth";
 
-export const loginUser = async (username, password) => {
-  const response = await api.post("auth/login/", {
+export const loginUser = async (
+  username: string,
+  password: string
+): Promise<AuthResponse> => {
+  const response = await api.post<AuthResponse>("token/", {
     username,
     password,
   });
@@ -14,7 +18,7 @@ export const loginUser = async (username, password) => {
   return response.data;
 };
 
-export const logoutUser = () => {
+export const logoutUser = (): void => {
   localStorage.removeItem("access");
   localStorage.removeItem("refresh");
 };

@@ -43,6 +43,11 @@ const navItems: NavItem[] = [
     path: "/productos",
   },
   {
+    icon: <BoxCubeIcon />,
+    name: "Insumos",
+    path: "/insumos",
+  },
+  {
     icon: <DollarLineIcon />,
     name: "Métodos de pago y comisiones",
     path: "/metodos-pago-comisiones",
