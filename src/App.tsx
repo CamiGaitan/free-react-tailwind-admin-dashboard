@@ -26,6 +26,9 @@ import Insumos from "./pages/Insumos";
 import CrearMetodoDePago from "./pages/Formularios/MetodoDePagoForm";
 import CrearProducto from "./pages/Formularios/ProductoForm";
 import CrearVenta from "./pages/Formularios/VentaForm";
+import BalancePage from "./pages/Dashboard/Balances";
+import Finanzas from "./pages/Finanzas";
+import ExpenseForm from "./pages/Formularios/GastosForm";
 
 export default function App() {
   return (
@@ -38,6 +41,13 @@ export default function App() {
             <Route index path="/" element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            } 
+            />
+
+            <Route index path="/balances" element={
+              <ProtectedRoute>
+                <BalancePage />
               </ProtectedRoute>
             } 
             />
@@ -143,7 +153,17 @@ export default function App() {
                 <CrearMetodoDePago />
               </ProtectedRoute>
             } />
-          </Route>
+            <Route path="/finanzas" element={
+              <ProtectedRoute>
+                <Finanzas />
+              </ProtectedRoute>
+            } />
+            <Route path="/finanzas/nuevo" element={
+              <ProtectedRoute>
+                <ExpenseForm />
+              </ProtectedRoute>
+            } />
+            </Route>
 
           {/* Auth Layout */}
           <Route path="/signin" element={<SignIn />} />

@@ -29,8 +29,8 @@ type NavItem = {
 const navItems: NavItem[] = [
   {
     icon: <GridIcon />,
-    name: "Dashboard",
-    path: "/",
+    name: "Inicio",
+    subItems: [{name: "Dashboard", path: "/"}, { name: "Balances y ventas", path: "/balances", pro: false }],
   },
   {
     icon: <ShootingStarIcon />,
@@ -49,8 +49,8 @@ const navItems: NavItem[] = [
   },
   {
     icon: <DollarLineIcon />,
-    name: "Métodos de pago y comisiones",
-    path: "/metodos-pago-comisiones",
+    name: "Finanzas",
+    subItems: [{ name: "Gastos", path: "/finanzas", pro: false },{ name: "Métodos de pago y comisiones", path: "/metodos-pago-comisiones", pro: false }],
   },
   {
     name: "Forms",

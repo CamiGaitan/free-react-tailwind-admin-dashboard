@@ -1,32 +1,34 @@
+// paymentService.ts
 import api from "./client";
 import { PaymentMethod } from "../types/payment";
 
+const BASE = "sales/payment-methods/";
+
 export const getPaymentMethods = async (): Promise<PaymentMethod[]> => {
-  const response = await api.get<PaymentMethod[]>("metodos-pago-comisiones/");
-  return response.data;
+  const { data } = await api.get<PaymentMethod[]>(BASE);
+  return data;
 };
 
-export const getPaymentMethodById = async (
-  id: number
-): Promise<PaymentMethod> => {
-  const response = await api.get<PaymentMethod>(`metodos-pago-comisiones/${id}/`);
-  return response.data;
+export const getPaymentMethodById = async (id: number): Promise<PaymentMethod> => {
+  const { data } = await api.get<PaymentMethod>(`${BASE}${id}/`);
+  return data;
 };
 
 export const createPaymentMethod = async (
-  data: Omit<PaymentMethod, "id">
+  payload: Omit<PaymentMethod, "id">
 ): Promise<PaymentMethod> => {
-  const response = await api.post<PaymentMethod>(
-    "metodos-pago-comisiones/",
-    data
-  );
-  return response.data;
+  const { data } = await api.post<PaymentMethod>(BASE, payload);
+  return data;
 };
 
-export const updatePaymentMethod = (
+export const updatePaymentMethod = async (
   id: number,
-  data: Omit<PaymentMethod, "id">
-) => api.put<PaymentMethod>(`metodos-pago-comisiones/${id}/`, data);
+  payload: Partial<Omit<PaymentMethod, "id">>
+): Promise<PaymentMethod> => {
+  const { data } = await api.patch<PaymentMethod>(`${BASE}${id}/`, payload);
+  return data;
+};
 
-export const deletePaymentMethod = (id: number) =>
-  api.delete(`metodos-pago-comisiones/${id}/`);
+export const deletePaymentMethod = async (id: number): Promise<void> => {
+  await api.delete(`${BASE}${id}/`);
+};
